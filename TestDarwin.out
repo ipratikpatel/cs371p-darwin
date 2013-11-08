@@ -1,42 +1,52 @@
 Running main() from gtest_main.cc
-[==========] Running 8 tests from 1 test case.
+[==========] Running 12 tests from 1 test case.
 [----------] Global test environment set-up.
-[----------] 8 tests from Darwin
+[----------] 12 tests from Darwin
 [ RUN      ] Darwin.specie1_def
 [       OK ] Darwin.specie1_def (14 ms)
 [ RUN      ] Darwin.specie1_add_instr
-Specie::addInstruction
-Specie::addInstruction
-[       OK ] Darwin.specie1_add_instr (15 ms)
+[       OK ] Darwin.specie1_add_instr (14 ms)
 [ RUN      ] Darwin.specie1_is_equal
-Specie::addInstruction
-Specie::addInstruction
-Specie::is_equal
 [       OK ] Darwin.specie1_is_equal (3 ms)
 [ RUN      ] Darwin.creature1_def
 [       OK ] Darwin.creature1_def (6 ms)
 [ RUN      ] Darwin.creature1_cons
-Specie::addInstruction
-Specie::addInstruction
-Specie::is_equal
 [       OK ] Darwin.creature1_cons (13 ms)
 [ RUN      ] Darwin.creature2_cons
-Specie::addInstruction
-Specie::addInstruction
-Specie::is_equal
-[       OK ] Darwin.creature2_cons (26 ms)
+[       OK ] Darwin.creature2_cons (27 ms)
+[ RUN      ] Darwin.creature3_cons
+[       OK ] Darwin.creature3_cons (9 ms)
+[ RUN      ] Darwin.creature1_left
+[       OK ] Darwin.creature1_left (11 ms)
+[ RUN      ] Darwin.creature1_right
+[       OK ] Darwin.creature1_right (11 ms)
 [ RUN      ] Darwin.darwin1_const
-Specie::addInstruction
-Specie::addInstruction
 [       OK ] Darwin.darwin1_const (6 ms)
 [ RUN      ] Darwin.darwin1_add_creature
-Specie::addInstruction
-Specie::addInstruction
-Darwin::add_creature
-Specie::is_equal
-[       OK ] Darwin.darwin1_add_creature (22 ms)
-[----------] 8 tests from Darwin (119 ms total)
+[       OK ] Darwin.darwin1_add_creature (23 ms)
+[ RUN      ] Darwin.darwin1_if_wall
+Is_wall true 
+Is_wall pc = 3
+Is_wall true 
+FUCK 3
+Is_wall true 
+Is_wall pc = 3
+Is_wall true 
+Is_wall pc = 3
+Is_wall true 
+Is_wall pc = 3
+Is_wall true 
+TestDarwin.c++:232: Failure
+Value of: darwin1.grid[0][0].pc == 0
+  Actual: false
+Expected: true
+[  FAILED  ] Darwin.darwin1_if_wall (40 ms)
+[----------] 12 tests from Darwin (190 ms total)
 
 [----------] Global test environment tear-down
-[==========] 8 tests from 1 test case ran. (146 ms total)
-[  PASSED  ] 8 tests.
+[==========] 12 tests from 1 test case ran. (217 ms total)
+[  PASSED  ] 11 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Darwin.darwin1_if_wall
+
+ 1 FAILED TEST

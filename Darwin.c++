@@ -8,6 +8,7 @@
 #include <vector>
 
 #define DB 0
+#define DBRC 0
 
 using namespace std;
 
@@ -63,35 +64,72 @@ bool Creature::right()
 {
 	if(DB) cout << "Creature::right" << endl;
 	if(direction == SOUTH)
+	{
 		direction = WEST;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == WEST)
+	{
 		direction = NORTH;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == NORTH)
+	{
 		direction = EAST;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == EAST)
-		direction = SOUTH;	
-	// go to next instruction
-	++pc;
-	is_done = true;
-	// return false because we don't want any more instructions to run in run_creature look at run_creature...
-	return false;
+	{	direction = SOUTH;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;	
+	}
 }
 
 bool Creature::left()
 {
 	if(DB) cout << "Creature::left" << endl;
 	if(direction == SOUTH)
+	{
 		direction = EAST;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == WEST)
+	{
 		direction = SOUTH;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == NORTH)
+	{
 		direction = WEST;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;
+	}
 	if(direction == EAST)
-		direction = NORTH;
-	++pc;
-	is_done = true;
-	// return false because we don't want any more instructions to run in run_creature look at run_creature...
-	return false;	
+	{	direction = NORTH;
+		++pc;
+		is_done = true;
+		// return false because we don't want any more instructions to run in run_creature look at run_creature...
+		return false;	
+	}
 }
 
 static int get_next_col(int col, int dir)
@@ -128,10 +166,15 @@ bool Creature::if_wall(int next_pc, bool check)
 	bool is_wall = false;
 
 	if(next_c < 0 || next_c >= (int)max_col)
+	{	
 		is_wall = true;
-
+		if(DB)cout << "Is_wall true " << endl;
+	}
 	if (next_r < 0 || next_r >= (int)max_row)
+	{	
 		is_wall = true;
+		if(DB)cout << "Is_wall true " << endl;
+	}
 
 	// TODO: in  take _action
 	if(!check)
@@ -139,6 +182,7 @@ bool Creature::if_wall(int next_pc, bool check)
 		if(is_wall)
 		{
 			pc = next_pc;
+			if(DB)cout << "Is_wall pc = " << pc << endl;
 		}	
 		else
 			++pc;
@@ -163,14 +207,20 @@ bool Creature::if_empty (int next_pc, bool check)
 
 	if (!(*this).if_wall(0, true))
 	{
-		if( ((*cr_grid)[next_r][next_c]).cr_grid == NULL )
+		if( ((*cr_grid)[next_r][next_c]).cr_grid == NULL && ((*cr_grid)[next_r][next_c]).max_row == 0 && ((*cr_grid)[next_r][next_c]).max_col == 0 )
+		{	
 			is_empty = true;
+			if(DB)cout << "Is_empty true " << endl;
+		}
 	}
 
 	if(!check )
 	{
 		if(is_empty)
+		{
 			pc = next_pc;
+			if(DB)cout << "is_empty pc = " << pc << endl;
+		}
 		else
 			++pc;
 		if(DB) cout << "end of if_empty " << endl;
@@ -194,13 +244,18 @@ bool Creature::if_enemy (int next_pc, bool check)
 	if(!(*this).if_wall(0, true) && !(*this).if_empty(0, true))
 	{
 		if( !specie.is_equal( ((*cr_grid)[next_r][next_c]).specie) )
-			is_enemy = true;
+		{	is_enemy = true;
+			if(DB)cout << "is_enemy true" << endl;
+		}
 	}
 
 	if(!check)
 	{
 		if(is_enemy)
+		{
 			pc = next_pc;
+			if(DB)cout << "is_enemy pc = " << pc << endl;
+		}
 		else
 			++pc;
 		return true;
@@ -360,7 +415,7 @@ void Creature::run_creature()
 {
 	bool check = true;
 	if(DB) cout << "Creature::run_creature******************************" << endl;
-	while(check)
+	while(check && !is_done)
 	{
 			if(DB)  cout << "Creature::pc " << pc << endl;
 			if(DB)  cout << "Creature::direction " << direction << endl; 
@@ -371,11 +426,12 @@ void Creature::run_creature()
 		if((*this).max_col > 0 && (*this).max_row > 0 ) 
 		{
 			if(DB) check_grid(cr_grid, 8, 8);
-			if(DB)  cout << "Creature::inst_pc " << specie.instructions[pc] << endl;
-			if(DB)  cout << "Creature::max_row " << max_row << endl;
-			if(DB)  cout << "Creature::max_col " << max_col << endl;
-			if(DB)  cout << "Creature::row " << cr_row << endl;
-			if(DB)  cout << "Creature::col " << cr_col << endl;
+			if(DBRC)  cout << "Creature::inst_pc " << specie.instructions[pc] << endl;
+			if(DBRC)  cout << "Creature::max_row " << max_row << endl;
+			if(DBRC)  cout << "Creature::max_col " << max_col << endl;
+			if(DBRC)  cout << "(Creature::row, Creature::col) " << cr_row << cr_col << endl;
+			if(DBRC)  cout << "Creature::direction " << direction << endl; 
+
 			check = (*this).creature_action(specie.instructions[pc]);
 			if(DB)  cout << "****************************************************************" << endl;
 			if(DB) check_grid(cr_grid, 8, 8);
@@ -471,13 +527,13 @@ void Darwin::print()
 		cout << "  ";
 		for (int i = 0; i < (int)_maxC; ++i)
 		{
-			cout << i;
+			cout << i % 10;
 		}
 		cout << endl;
 
 		for (int row = 0; row < (int)_maxR; ++row)
 		{
-			cout << row << " ";
+			cout << row % 10 << " ";
 			for (int col = 0; col < (int)_maxC; ++col)
 			{
 				if(grid[row][col].max_row == 0)
@@ -487,7 +543,8 @@ void Darwin::print()
 			}
 			cout << endl;
 		}
-		cout << endl;
+		//cout << endl;
+
 
 		// for (int row = 0; row < (int)_maxR; ++row)
 		// {

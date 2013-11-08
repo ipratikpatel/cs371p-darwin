@@ -32,6 +32,17 @@ To document the program:
 #include <stdexcept> // invalid_argument, out_of_range
 #include "Darwin.h"
 
+
+    // Helper function to generate random creatures
+void addRandomCreature (Darwin& d, Specie& s, int height, int width)
+{
+        int pos = rand() % (height * width);
+        int row = pos / height;
+        int col = pos % height;
+        int dir = static_cast<int> (rand() % 4);
+        d.add_creature(row, col, s, dir);
+}
+
 // ----
 // main
 // ----
@@ -141,12 +152,15 @@ int main () {
 
             cout << "Turn : " << 0 << endl;
             darwin1.print();
+            cout << endl;
             for (int i = 1; i <= 5; ++i)
             {
               cout << "Turn : " << i << endl;
                 darwin1.darwin_turn();
                 darwin1.print();
+                cout << endl;
             }
+            cout << endl;
         }
     catch (const invalid_argument&) {
         assert(false);}
@@ -195,8 +209,6 @@ int main () {
     // ------------
 
     try {
-        cout << "*** Darwin 72x72 without Best ***" << endl;
-        srand(0);
         /*
         Randomly place the following creatures facing randomly.
         Call rand(), mod it with 5184 (72x72), and use that for the position
@@ -212,39 +224,29 @@ int main () {
         Print the first 10 grids          (i.e. 0, 1, 2...9).
         Print every 100th grid after that (i.e. 100, 200, 300...1000).
         */
-          srand(0);
-          Darwin grid(72, 72);
-          for (int i = 0; i < 10; i++) 
-          {
-            int rand_num = rand();
-            grid.add_creature(rand_num % 5184 / 72, rand_num % 5184 % 72, food, rand() % 4);
-          }
-          for (int i = 0; i < 10; i++) 
-          {
-            int rand_num = rand();
-            grid.add_creature(rand_num % 5184 / 72, rand_num % 5184 % 72, hopper, rand() % 4);
-          }
-          for (int i = 0; i < 10; i++) 
-          {
-            int rand_num = rand();
-            grid.add_creature(rand_num % 5184 / 72, rand_num % 5184 % 72, rover, rand() % 4);
-          }
-          for (int i = 0; i < 10; i++) 
-          {
-            int rand_num = rand();
-            grid.add_creature(rand_num % 5184 / 72, rand_num % 5184 % 72, trap, rand() % 4);
-          }
-          cout << "Turn = 0.";
-          grid.print();
-          for (int i = 1; i <= 1000; ++i) 
-          {
-            grid.darwin_turn();
-            if (i % 100 == 0)
-            {
-              cout << "Turn = " << i << ".";
-              grid.print();
+        cout << "*** Center Death Trap 8x8 ***" << endl;
+        srand(0);
+        Darwin d(8, 8);
+        d.add_creature(0, 0, rover, EAST);
+        d.add_creature( 7, 2, rover,NORTH);
+        d.add_creature( 7, 6,rover, SOUTH);
+        d.add_creature( 1, 6,rover, SOUTH); 
+        d.add_creature( 3, 3,trap, NORTH);
+        d.add_creature( 3, 4,trap, EAST);  
+        d.add_creature( 4, 3,trap, WEST);  
+        d.add_creature( 4, 4,trap, SOUTH);  
+        const int NUM_MOVES = 200;
+        cout << "Turn = " << 0 << "." << endl;
+        d.print();
+        std::cout << std::endl;
+        for (int i = 1; i <= NUM_MOVES; ++i) {
+            d.darwin_turn();
+            if (i % 10 == 0) {
+                cout << "Turn = " << i << "." << endl;
+                d.print();
+                std::cout << endl;
             }
-          }
+        }
         }
     catch (const invalid_argument&) {
         assert(false);}
@@ -276,7 +278,84 @@ int main () {
         Print the first 10 grids          (i.e. 0, 1, 2...9).
         Print every 100th grid after that (i.e. 100, 200, 300...1000).
         */
+        Darwin d(72, 72);
+        const int NUM_CREATURES = 10;
+        for (int i = 0; i < NUM_CREATURES; ++i)
+            addRandomCreature (d, food, 72, 72);
+        for (int i = 0; i < NUM_CREATURES; ++i)
+            addRandomCreature (d, hopper, 72, 72);
+        for (int i = 0; i < NUM_CREATURES; ++i)
+            addRandomCreature (d, rover, 72, 72);
+        for (int i = 0; i < NUM_CREATURES; ++i)
+            addRandomCreature (d, trap, 72, 72);
+
+        int NUM_MOVES = 9;
+        cout << "Turn = " << 0 << "." << endl;
+        d.print();
+        std::cout << std::endl;
+        for (int i = 0; i < NUM_MOVES; ++i) {
+          cout << "Turn = " << i << "." << endl;
+            d.darwin_turn();
+            d.print();
+            std::cout << endl;
         }
+
+        NUM_MOVES = 1000;
+        for (int i = 10; i <= NUM_MOVES; ++i) {
+            d.darwin_turn();
+            if (i % 100 == 0) {
+              cout << "Turn = " << i << "." << endl;
+                d.print();
+            }
+        }
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+
+
+      // ------------------
+    // Rover Takeover 8x8
+    // ------------------
+
+    try {
+        cout << "*** Rover Takeover 8x8 ***" << endl;
+        srand(0);
+                                /*        
+                                8x8 Darwin
+                                Rover, facing south at (3, 4)
+                                Food, facing south at (0, 2)
+                                Food, facing south at (7, 4)
+                                Food, facing south at (2, 7)
+                                Food, facing north at (3, 0)
+                                Food, facing north at (4, 5)
+                                Food, facing north at (5, 2)
+                                Food, facing north at (6, 3)
+                                Simulate 100 moves
+                                Print first 10 moves and multiples of 10
+                                */
+                                Darwin d(8, 8);
+                                d.add_creature(3, 4, rover, 4);
+                                d.add_creature(0, 2, food, 4);
+                                d.add_creature(7, 4, food, 4);
+                                d.add_creature(2, 7, food, 4);
+                                d.add_creature(3, 0, food, 2);
+                                d.add_creature(4, 5, food, 2);
+                                d.add_creature(5, 2, food, 2);
+                                d.add_creature(6, 3, food, 2);
+
+                                cout << "Turn = " << 0 << "." << endl;
+                                d.print();
+                                for (int i = 1; i <= 100; i++){
+                                        d.darwin_turn();
+                                        if (i < 10 || i % 10 == 0)
+                                        { cout << "Turn = " << i << "." << endl;
+                                                d.print();
+                                        }
+                                }
+    }
     catch (const invalid_argument&) {
         assert(false);}
     catch (const out_of_range&) {

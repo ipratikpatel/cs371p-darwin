@@ -89,6 +89,7 @@ class Darwin
 {
 public:
 	std::vector<std::vector<Creature> > grid;
+	std::vector<std::vector<Creature> > *grid_p;
 private:
 	size_t _maxR;
 	size_t _maxC;

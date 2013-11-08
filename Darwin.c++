@@ -1,4 +1,4 @@
-/*#include "Darwin.h"
+#include "Darwin.h"
 #include <cassert>   // assert
 #include <cstdlib>   // rand, srand
 #include <iostream>  // cout, endl
@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
+#define DB 0
 
 using namespace std;
 
@@ -23,13 +25,13 @@ Specie::Specie(const char c)
 
 void Specie::addInstruction (string s)
 {
-	cout << "Specie::addInstruction" << endl;
+	if(DB) cout << "Specie::addInstruction" << endl;
 	instructions.push_back(s);
 }
 
 bool Specie::is_equal (const Specie& rhs)
 {
-	cout << "Specie::is_equal" << endl;
+	if(DB) cout << "Specie::is_equal" << endl;
 	return name == rhs.name;
 }
 
@@ -59,7 +61,7 @@ Creature::Creature(int dir, Specie sp)
 
 bool Creature::right()
 {
-	cout << "Creature::right" << endl;
+	if(DB) cout << "Creature::right" << endl;
 	if(direction == SOUTH)
 		direction = WEST;
 	if(direction == WEST)
@@ -77,7 +79,7 @@ bool Creature::right()
 
 bool Creature::left()
 {
-	cout << "Creature::left" << endl;
+	if(DB) cout << "Creature::left" << endl;
 	if(direction == SOUTH)
 		direction = EAST;
 	if(direction == WEST)
@@ -94,7 +96,7 @@ bool Creature::left()
 
 static int get_next_col(int col, int dir)
 {
-	cout << "Creature::get_next_col" << endl;
+	if(DB) cout << "Creature::get_next_col" << endl;
 	if (dir == NORTH || dir == SOUTH)
 		return col;
 	else if (dir == EAST)
@@ -105,7 +107,7 @@ static int get_next_col(int col, int dir)
 
 static int get_next_row(int row, int dir)
 {
-	cout << "Creature::get_next_row" << endl;
+	if(DB) cout << "Creature::get_next_row" << endl;
 	if (dir == WEST || dir == EAST)
 		return row;
 	else if (dir == SOUTH)
@@ -116,7 +118,7 @@ static int get_next_row(int row, int dir)
 
 bool Creature::if_wall(int next_pc, bool check)
 {
-	cout << "Creature::if_wall" << endl;
+	if(DB) cout << "Creature::if_wall" << endl;
 	assert(cr_grid != NULL);
 	assert(max_row != 0);
 	assert(max_col != 0);
@@ -128,7 +130,7 @@ bool Creature::if_wall(int next_pc, bool check)
 	if(next_c < 0 || next_c >= (int)max_col)
 		is_wall = true;
 
-	if (next_r < 0 || next_c >= (int)max_row)
+	if (next_r < 0 || next_r >= (int)max_row)
 		is_wall = true;
 
 	// TODO: in  take _action
@@ -141,15 +143,16 @@ bool Creature::if_wall(int next_pc, bool check)
 		else
 			++pc;
 		// return true because we want any more instructions to run in run_creature look at run_creature...
+		if(DB) cout << "end of if_wall " << endl;
 		return true; 
 	}
-
+	if(DB) cout << "end of if_wall " << endl;
 	return is_wall;
 }
 
 bool Creature::if_empty (int next_pc, bool check)
 {
-	cout << "Creature::if_empty" << endl;
+	if(DB) cout << "Creature::if_empty" << endl;
 	assert(cr_grid != NULL);
 	assert(max_row != 0);
 	assert(max_col != 0);
@@ -170,14 +173,16 @@ bool Creature::if_empty (int next_pc, bool check)
 			pc = next_pc;
 		else
 			++pc;
+		if(DB) cout << "end of if_empty " << endl;
 		return true;
 	}
+	if(DB) cout << "end of if_empty " << endl;
 	return is_empty;
 }
 
 bool Creature::if_enemy (int next_pc, bool check)
 {
-	cout << "Creature::if_enemy" << endl;
+	if(DB) cout << "Creature::if_enemy" << endl;
 	assert(cr_grid != NULL);
 	assert(max_row != 0);
 	assert(max_col != 0);
@@ -206,7 +211,7 @@ bool Creature::if_enemy (int next_pc, bool check)
 
 bool Creature::hop ()
 {
-	cout << "Creature::hop" << endl;
+	if(DB) cout << "Creature::hop" << endl;
 	assert(cr_grid != NULL);
 	assert(max_row != 0);
 	assert(max_col != 0);
@@ -216,28 +221,35 @@ bool Creature::hop ()
 
 	if((*this).if_empty(0, true))
 	{
+		if(DB) cout << "now hopping " << endl;
 		(*cr_grid)[next_r][next_c] = *this;		
-		(*cr_grid)[next_r][next_c].cr_row = cr_row;
-		(*cr_grid)[next_r][next_c].cr_col = cr_col;
+		assert((*cr_grid)[next_r][next_c].cr_row == cr_row);
+		(*cr_grid)[next_r][next_c].cr_row = (size_t)next_r;
+		(*cr_grid)[next_r][next_c].cr_col = (size_t)next_c;
+		assert((*cr_grid)[next_r][next_c].cr_col == next_c);
+		assert((*cr_grid)[next_r][next_c].max_row == max_row);
+		assert((*cr_grid)[next_r][next_c].cr_grid != NULL);
+		(*cr_grid)[next_r][next_c].specie = specie;
 		(*cr_grid)[next_r][next_c].pc = pc + 1;
 		(*cr_grid)[next_r][next_c].is_done = true;
 		assert((*cr_grid)[next_r][next_c].direction == direction);
 		//TODO:  If not right check the dirction
 		*this = Creature();
-
+		if(DB) cout << "end hope with " << false << endl;
 		return false;
 	}
 	else
 	{
 		++pc;
 		is_done = true;
+		if(DB) cout << "end hope with " << false << endl;
 		return false;
 	}
 }
 
 bool Creature::infect()
 {
-	cout << "Creature::infect" << endl;
+	if(DB) cout << "Creature::infect" << endl;
 	assert(cr_grid != NULL);
 	assert(max_row != 0);
 	assert(max_col != 0);
@@ -257,7 +269,9 @@ bool Creature::infect()
 
 bool Creature::creature_action(string str)
 {	
-	cout << "Creature::creature_action" << endl;
+	if(DB) cout << "Creature::creature_action" << endl;
+	if(DB) cout << "Creature:: name" << specie.name << endl;
+	if(DB) cout << "command " << str << endl;
 	bool ans = false;
 	if (str.compare("left") == 0)
 	{
@@ -290,7 +304,8 @@ bool Creature::creature_action(string str)
 	string num;
 	iss >> num;
 	int next_pc = atoi(num.c_str());
-	cout << "Next PC after tokenizing " << next_pc << endl;
+	if(DB) cout << "control " << control << endl;
+	if(DB) cout << "Next PC after tokenizing " << next_pc << endl;
 
 	if (control.compare("if_wall") == 0)
 	{
@@ -327,37 +342,55 @@ bool Creature::creature_action(string str)
 	return true;
 }
 
+bool check_grid (vector<vector<Creature> > *grid,int maxR, int maxC )
+{
+	for (int row = 0; row < (int)maxR; ++row)
+		{
+			for (int col = 0; col < (int)maxC; ++col)
+			{
+				cout << "( " << row << ", " << col << " )  max_row: " << (*grid)[row][col].max_row << "max_col: " << (*grid)[row][col].max_col
+					 << "row: " << (*grid)[row][col].cr_row << "col: " << (*grid)[row][col].cr_row << endl;
+ 			}
+			cout << endl;
+		}
+	return true;
+}
+
 void Creature::run_creature()
 {
 	bool check = true;
-	cout << "Creature::run_creature******************************" << endl;
+	if(DB) cout << "Creature::run_creature******************************" << endl;
 	while(check)
 	{
-		cout << "Creature::pc " << pc << endl;
-		cout << "Creature::direction " << direction << endl; 
-			cout << "Creature::max_row " << max_row << endl;
-			cout << "Creature::max_col " << max_col << endl;
-			cout << "Creature::row " << cr_row << endl;
-			cout << "Creature::col " << cr_col << endl;
-		if(max_col > 0 && max_row > 0 ) 
+			if(DB)  cout << "Creature::pc " << pc << endl;
+			if(DB)  cout << "Creature::direction " << direction << endl; 
+			if(DB)  cout << "Creature::max_row " << (*this).max_row << endl;
+			if(DB)  cout << "Creature::max_col " << (*this).max_col << endl;
+			if(DB)  cout << "Creature::row " << (*this).cr_row << endl;
+			if(DB)  cout << "Creature::col " << (*this).cr_col << endl;
+		if((*this).max_col > 0 && (*this).max_row > 0 ) 
 		{
-			
-			cout << "Creature::inst_pc " << specie.instructions[pc] << endl;
-			cout << "Creature::max_row " << max_row << endl;
-			cout << "Creature::max_col " << max_col << endl;
-			cout << "Creature::row " << cr_row << endl;
-			cout << "Creature::col " << cr_col << endl;
+			if(DB) check_grid(cr_grid, 8, 8);
+			if(DB)  cout << "Creature::inst_pc " << specie.instructions[pc] << endl;
+			if(DB)  cout << "Creature::max_row " << max_row << endl;
+			if(DB)  cout << "Creature::max_col " << max_col << endl;
+			if(DB)  cout << "Creature::row " << cr_row << endl;
+			if(DB)  cout << "Creature::col " << cr_col << endl;
 			check = (*this).creature_action(specie.instructions[pc]);
-			cout << "Creature::pc " << pc << endl;
-		cout << "Creature::direction " << direction << endl; 
-			cout << "Creature::max_row " << max_row << endl;
-			cout << "Creature::max_col " << max_col << endl;
-			cout << "Creature::row " << cr_row << endl;
-			cout << "Creature::col " << cr_col << endl;
+			if(DB)  cout << "****************************************************************" << endl;
+			if(DB) check_grid(cr_grid, 8, 8);
+			if(DB)  cout << "Creature::pc " << pc << endl;
+			if(DB) 	cout << "Creature::direction " << direction << endl; 
+			if(DB) 	cout << "Creature::max_row " << max_row << endl;
+			if(DB) 	cout << "Creature::max_col " << max_col << endl;
+			if(DB) 	cout << "Creature::row " << cr_row << endl;
+			if(DB) 	cout << "Creature::col " << cr_col << endl;
 		}
 		else
 		{
 			cout << "What?" << endl;
+			//check_grid(cr_grid, 8, 8);
+			cout << "Now?" << endl;
 			break;
 		}
 			
@@ -368,6 +401,8 @@ Darwin::Darwin()
 {
 	_maxR = 0;
 	_maxC = 0;
+	grid = vector<vector<Creature> >(0);
+	grid_p = &grid;
 }
 
 Darwin::Darwin(size_t rows, size_t cols)
@@ -375,11 +410,12 @@ Darwin::Darwin(size_t rows, size_t cols)
 	_maxR = rows;
 	_maxC = cols;
 	grid = vector<vector<Creature> >(rows, vector<Creature>(cols));
+	grid_p = &grid;
 }
 
 void Darwin::add_creature(int row, int col, Specie sp, int dir)
 {
-	cout << "Darwin::add_creature" << endl;
+	if(DB) cout << "Darwin::add_creature" << endl;
 	if ((int)_maxR > 0 && (int)_maxC > 0 && row < (int)_maxR && col < (int)_maxC && row >= 0 && col >= 0)
 	{
 		grid[row][col] = Creature(dir, sp);
@@ -387,19 +423,31 @@ void Darwin::add_creature(int row, int col, Specie sp, int dir)
 		grid[row][col].cr_col = col;
 		grid[row][col].max_row = _maxR;
 		grid[row][col].max_col = _maxC;
-		grid[row][col].cr_grid = &grid;
+		grid[row][col].cr_grid = grid_p;
 	}
 }
 
+
 void Darwin::darwin_turn()
 {
-	cout << "Darwin::darwin_turn" << endl;
+	if(DB) printf("Darwin::darwin_turn\n");
 	for (int row = 0; row < (int)_maxR; ++row)
 	{
-		for (int col = 0; row < (int)_maxC; ++col)
+		for (int col = 0; col < (int)_maxC; ++col)
 		{
-			if (grid[row][col].max_col != 0 && !grid[row][col].is_done)
+			if(DB)  cout << "(_maxR, _maxC) " << _maxR << " " << _maxC << endl;
+			if (grid[row][col].max_row != 0 && grid[row][col].max_col != 0 && !grid[row][col].is_done )
 			{
+
+				if(DB)  cout << "darwin_turn" << endl;
+				if(DB)  check_grid(grid_p, 8, 8);
+				if(DB)  cout << "( row, col )" << row << " " << col << endl;
+				if(DB)  cout << "pc " << grid[row][col].pc << endl;
+				if(DB)  cout << "direction " << grid[row][col].direction << endl; 
+				if(DB)  cout << "max_row " << grid[row][col].max_row << endl;
+				if(DB)  cout << "max_col " << grid[row][col].max_col << endl;
+				if(DB)  cout << "row " << grid[row][col].cr_row << endl;
+				if(DB)  cout << "col " << grid[row][col].cr_col << endl;
 				grid[row][col].run_creature();
 			}
 		}
@@ -414,12 +462,13 @@ void Darwin::darwin_turn()
 	}
 }
 
+
 void Darwin::print()
 {	
-	cout << "Darwin::printf" << endl;
+	//cout << "Darwin::printf" << endl;
 	if(_maxC != 0 && (int)_maxR != 0)
 	{
-		cout << "\n";
+		cout << "  ";
 		for (int i = 0; i < (int)_maxC; ++i)
 		{
 			cout << i;
@@ -436,12 +485,23 @@ void Darwin::print()
 				else
 					cout << grid[row][col].specie.name;
 			}
+			cout << endl;
 		}
 		cout << endl;
+
+		// for (int row = 0; row < (int)_maxR; ++row)
+		// {
+		// 	for (int col = 0; col < (int)_maxC; ++col)
+		// 	{
+		// 		cout << "( " << row << ", " << col << " )  max_row: " << grid[row][col].max_row << "max_col: " << grid[row][col].max_col
+		// 			 << "row: " << grid[row][col].cr_row << "col: " << grid[row][col].cr_row << "direction: " << grid[row][col].direction << endl;
+ 	// 		}
+		// 	cout << endl;
+		// }
 	}
 }
 
-*/
+
 
 
 

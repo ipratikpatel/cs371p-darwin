@@ -39,7 +39,7 @@ void addRandomCreature (Darwin& d, Specie& s, int height, int width)
         int pos = rand() % (height * width);
         int row = pos / height;
         int col = pos % height;
-        int dir = static_cast<int> (rand() % 4);
+        int dir = static_cast<int> (rand() % 4) + 1;
         d.add_creature(row, col, s, dir);
 }
 
@@ -160,7 +160,7 @@ int main () {
                 darwin1.print();
                 cout << endl;
             }
-            cout << endl;
+            
         }
     catch (const invalid_argument&) {
         assert(false);}
@@ -196,7 +196,9 @@ int main () {
               cout << "Turn = " << i << "." << endl;
                 darwin1.darwin_turn();
                 darwin1.print();
+                cout << endl;
             }
+
         }
     catch (const invalid_argument&) {
         assert(false);}
@@ -293,7 +295,7 @@ int main () {
         cout << "Turn = " << 0 << "." << endl;
         d.print();
         std::cout << std::endl;
-        for (int i = 0; i < NUM_MOVES; ++i) {
+        for (int i = 1; i <= NUM_MOVES; ++i) {
           cout << "Turn = " << i << "." << endl;
             d.darwin_turn();
             d.print();
@@ -306,6 +308,7 @@ int main () {
             if (i % 100 == 0) {
               cout << "Turn = " << i << "." << endl;
                 d.print();
+                std::cout << endl;
             }
         }
         }
@@ -353,6 +356,7 @@ int main () {
                                         if (i < 10 || i % 10 == 0)
                                         { cout << "Turn = " << i << "." << endl;
                                                 d.print();
+                                                std::cout << endl;
                                         }
                                 }
     }

@@ -1,0 +1,42 @@
+Running main() from gtest_main.cc
+[==========] Running 8 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 8 tests from Darwin
+[ RUN      ] Darwin.specie1_def
+[       OK ] Darwin.specie1_def (14 ms)
+[ RUN      ] Darwin.specie1_add_instr
+Specie::addInstruction
+Specie::addInstruction
+[       OK ] Darwin.specie1_add_instr (15 ms)
+[ RUN      ] Darwin.specie1_is_equal
+Specie::addInstruction
+Specie::addInstruction
+Specie::is_equal
+[       OK ] Darwin.specie1_is_equal (3 ms)
+[ RUN      ] Darwin.creature1_def
+[       OK ] Darwin.creature1_def (6 ms)
+[ RUN      ] Darwin.creature1_cons
+Specie::addInstruction
+Specie::addInstruction
+Specie::is_equal
+[       OK ] Darwin.creature1_cons (13 ms)
+[ RUN      ] Darwin.creature2_cons
+Specie::addInstruction
+Specie::addInstruction
+Specie::is_equal
+[       OK ] Darwin.creature2_cons (26 ms)
+[ RUN      ] Darwin.darwin1_const
+Specie::addInstruction
+Specie::addInstruction
+[       OK ] Darwin.darwin1_const (6 ms)
+[ RUN      ] Darwin.darwin1_add_creature
+Specie::addInstruction
+Specie::addInstruction
+Darwin::add_creature
+Specie::is_equal
+[       OK ] Darwin.darwin1_add_creature (22 ms)
+[----------] 8 tests from Darwin (119 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 1 test case ran. (146 ms total)
+[  PASSED  ] 8 tests.

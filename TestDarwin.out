@@ -1,52 +1,114 @@
+valgrind TestDarwin > TestDarwin.out
+==23499== Memcheck, a memory error detector
+==23499== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==23499== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==23499== Command: TestDarwin
+==23499== 
+==23499== 
 Running main() from gtest_main.cc
-[==========] Running 12 tests from 1 test case.
+[==========] Running 45 tests from 1 test case.
 [----------] Global test environment set-up.
-[----------] 12 tests from Darwin
+[----------] 45 tests from Darwin
 [ RUN      ] Darwin.specie1_def
 [       OK ] Darwin.specie1_def (14 ms)
+[ RUN      ] Darwin.specie2_def
+[       OK ] Darwin.specie2_def (2 ms)
+[ RUN      ] Darwin.specie3_def
+[       OK ] Darwin.specie3_def (2 ms)
 [ RUN      ] Darwin.specie1_add_instr
 [       OK ] Darwin.specie1_add_instr (14 ms)
+[ RUN      ] Darwin.specie2_add_instr
+[       OK ] Darwin.specie2_add_instr (3 ms)
+[ RUN      ] Darwin.specie3_add_instr
+[       OK ] Darwin.specie3_add_instr (3 ms)
 [ RUN      ] Darwin.specie1_is_equal
 [       OK ] Darwin.specie1_is_equal (3 ms)
+[ RUN      ] Darwin.specie2_is_equal
+[       OK ] Darwin.specie2_is_equal (3 ms)
+[ RUN      ] Darwin.specie3_is_equal
+[       OK ] Darwin.specie3_is_equal (3 ms)
 [ RUN      ] Darwin.creature1_def
 [       OK ] Darwin.creature1_def (6 ms)
+[ RUN      ] Darwin.creature2_def
+[       OK ] Darwin.creature2_def (5 ms)
+[ RUN      ] Darwin.creature3_def
+[       OK ] Darwin.creature3_def (5 ms)
 [ RUN      ] Darwin.creature1_cons
-[       OK ] Darwin.creature1_cons (13 ms)
+[       OK ] Darwin.creature1_cons (14 ms)
 [ RUN      ] Darwin.creature2_cons
 [       OK ] Darwin.creature2_cons (27 ms)
 [ RUN      ] Darwin.creature3_cons
 [       OK ] Darwin.creature3_cons (9 ms)
 [ RUN      ] Darwin.creature1_left
-[       OK ] Darwin.creature1_left (11 ms)
+[       OK ] Darwin.creature1_left (12 ms)
+[ RUN      ] Darwin.creature2_left
+[       OK ] Darwin.creature2_left (10 ms)
+[ RUN      ] Darwin.creature3_left
+[       OK ] Darwin.creature3_left (10 ms)
 [ RUN      ] Darwin.creature1_right
-[       OK ] Darwin.creature1_right (11 ms)
+[       OK ] Darwin.creature1_right (12 ms)
+[ RUN      ] Darwin.creature2_right
+[       OK ] Darwin.creature2_right (10 ms)
+[ RUN      ] Darwin.creature3_right
+[       OK ] Darwin.creature3_right (11 ms)
+[ RUN      ] Darwin.darwin1_if_wall
+[       OK ] Darwin.darwin1_if_wall (21 ms)
+[ RUN      ] Darwin.darwin2_if_wall
+[       OK ] Darwin.darwin2_if_wall (10 ms)
+[ RUN      ] Darwin.darwin3_if_wall
+[       OK ] Darwin.darwin3_if_wall (7 ms)
+[ RUN      ] Darwin.darwin1_if_empty
+[       OK ] Darwin.darwin1_if_empty (12 ms)
+[ RUN      ] Darwin.darwin2_if_empty
+[       OK ] Darwin.darwin2_if_empty (8 ms)
+[ RUN      ] Darwin.darwin3_if_empty
+[       OK ] Darwin.darwin3_if_empty (7 ms)
+[ RUN      ] Darwin.darwin1_if_enemy
+[       OK ] Darwin.darwin1_if_enemy (10 ms)
+[ RUN      ] Darwin.darwin2_if_enemy
+[       OK ] Darwin.darwin2_if_enemy (7 ms)
+[ RUN      ] Darwin.darwin3_if_enemy
+[       OK ] Darwin.darwin3_if_enemy (7 ms)
+[ RUN      ] Darwin.darwin1_hop
+[       OK ] Darwin.darwin1_hop (16 ms)
+[ RUN      ] Darwin.darwin2_hop
+[       OK ] Darwin.darwin2_hop (9 ms)
+[ RUN      ] Darwin.darwin3_hop
+[       OK ] Darwin.darwin3_hop (10 ms)
+[ RUN      ] Darwin.darwin1_infect
+[       OK ] Darwin.darwin1_infect (16 ms)
+[ RUN      ] Darwin.darwin2_infect
+[       OK ] Darwin.darwin2_infect (14 ms)
+[ RUN      ] Darwin.darwin3_infect
+[       OK ] Darwin.darwin3_infect (14 ms)
+[ RUN      ] Darwin.creature1_take_action
+[       OK ] Darwin.creature1_take_action (7 ms)
+[ RUN      ] Darwin.darwin2_take_action
+[       OK ] Darwin.darwin2_take_action (9 ms)
+[ RUN      ] Darwin.darwin3_take_action
+[       OK ] Darwin.darwin3_take_action (15 ms)
 [ RUN      ] Darwin.darwin1_const
 [       OK ] Darwin.darwin1_const (6 ms)
+[ RUN      ] Darwin.darwin2_const
+[       OK ] Darwin.darwin2_const (5 ms)
+[ RUN      ] Darwin.darwin3_const
+[       OK ] Darwin.darwin3_const (4 ms)
 [ RUN      ] Darwin.darwin1_add_creature
-[       OK ] Darwin.darwin1_add_creature (23 ms)
-[ RUN      ] Darwin.darwin1_if_wall
-Is_wall true 
-Is_wall pc = 3
-Is_wall true 
-FUCK 3
-Is_wall true 
-Is_wall pc = 3
-Is_wall true 
-Is_wall pc = 3
-Is_wall true 
-Is_wall pc = 3
-Is_wall true 
-TestDarwin.c++:232: Failure
-Value of: darwin1.grid[0][0].pc == 0
-  Actual: false
-Expected: true
-[  FAILED  ] Darwin.darwin1_if_wall (40 ms)
-[----------] 12 tests from Darwin (190 ms total)
+[       OK ] Darwin.darwin1_add_creature (19 ms)
+[ RUN      ] Darwin.darwin2_add_creature
+[       OK ] Darwin.darwin2_add_creature (11 ms)
+[ RUN      ] Darwin.darwin3_add_creature
+[       OK ] Darwin.darwin3_add_creature (14 ms)
+[----------] 45 tests from Darwin (452 ms total)
 
 [----------] Global test environment tear-down
-[==========] 12 tests from 1 test case ran. (217 ms total)
-[  PASSED  ] 11 tests.
-[  FAILED  ] 1 test, listed below:
-[  FAILED  ] Darwin.darwin1_if_wall
-
- 1 FAILED TEST
+[==========] 45 tests from 1 test case ran. (479 ms total)
+[  PASSED  ] 45 tests.
+==23499== HEAP SUMMARY:
+==23499==     in use at exit: 0 bytes in 0 blocks
+==23499==   total heap usage: 2,379 allocs, 2,379 frees, 262,737 bytes allocated
+==23499== 
+==23499== All heap blocks were freed -- no leaks are possible
+==23499== 
+==23499== For counts of detected and suppressed errors, rerun with: -v
+==23499== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)

@@ -893,8 +893,6 @@ int main () {
     catch (const out_of_range&) {
         assert(false);} 
 
-// temp***************************************ericsu-RunDarwin*****************************************************************
-
     // ------------
     // rover_skinny_board 8x1
     // ------------
@@ -1106,7 +1104,6 @@ int main () {
     catch (const out_of_range&) {
         assert(false);}
 
-// temp**************************************************idrepeng-RunDarwin****************************************************8
         try {
         cout << "*** Darwin 5x5 Trap!***" << endl;
         /*
@@ -1186,7 +1183,398 @@ int main () {
     catch (const out_of_range&) {
         assert(false);}
 
+//*****************************************************psteiner-RunDarwin******************************************
 
+         try {
+        cout << "*** Darwin 1x10 ***" << endl;
+        Darwin darwin(1, 10);
+        
+        for (int i = 0; i < 5; i++) {
+            darwin.add_creature(0, i*2+1, hopper, EAST);
+        }
+        
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 4; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+    // ----------
+    // darwin 10x1
+    // ----------
+    try {
+        cout << "*** Darwin 10x1 ***" << endl;
+        Darwin darwin(10, 1);
+        
+        for (int i = 0; i < 5; i++) {
+            darwin.add_creature(i*2+1, 0, hopper, SOUTH);
+        }
+        
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 4; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+
+    // -------------------------------------
+    // darwin hop clockwise - direction test
+    // ------------------------------------
+
+    try {
+        cout << "*** Darwin hop clockwise - direction test ***" << endl;
+        Darwin darwin(4, 4);
+        darwin.add_creature(0, 0, hopper, EAST);
+        darwin.add_creature(0, 3, hopper, SOUTH);
+        darwin.add_creature(3, 3, hopper, WEST);
+        darwin.add_creature(3, 0, hopper, NORTH);
+
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 3; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+    // -------------------------------------
+    // darwin trap infect - all directions, all types
+    // ------------------------------------
+    try {
+        cout << "*** Darwin direction infection test all directions, all types ***" << endl;
+        Darwin darwin(5, 5);
+        darwin.add_creature(0, 2, food, SOUTH);
+        darwin.add_creature(1, 2, trap, NORTH);
+        darwin.add_creature(2, 0, hopper, EAST);
+        darwin.add_creature(2, 1, trap, WEST);
+        darwin.add_creature(2, 3, trap, EAST);
+        darwin.add_creature(2, 4, hopper, WEST);
+        darwin.add_creature(3, 2, trap, SOUTH);
+        darwin.add_creature(4, 2, rover, SOUTH);
+
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        darwin.darwin_turn();
+        cout << "Turn = " << 1 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+    // Test the rover's random motion
+    try {
+        cout << "*** Darwin 6x6 rover motion sanity ***" << endl;
+        Darwin darwin(6, 6);
+        darwin.add_creature(3, 3, rover, WEST);
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 10; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+        
+
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+    // ----------
+    // darwin 8x8
+    // ----------
+
+    try {
+        cout << "*** Darwin 8x8 ***" << endl;
+        /*
+        8x8 Darwin
+        Food,   facing EAST,  at (0, 0)
+        Hopper, facing NORTH, at (3, 3)
+        Hopper, facing EAST,  at (3, 4)
+        Hopper, facing SOUTH, at (4, 4)
+        Hopper, facing WEST,  at (4, 3)
+        Food,   facing NORTH, at (7, 7)
+        Simulate 5 moves.
+        Print every grid.
+        */
+        Darwin darwin(8, 8);
+        darwin.add_creature(0, 0, food, EAST);
+        darwin.add_creature(3, 3, hopper, NORTH);
+        darwin.add_creature(3, 4, hopper, EAST);
+        darwin.add_creature(4, 4, hopper, SOUTH);
+        darwin.add_creature(4, 3, hopper, WEST);
+        darwin.add_creature(7, 7, food, NORTH);
+
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 5; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+// ----------
+    // darwin 7x9
+    // ----------
+
+    try {
+        cout << "*** Darwin 7x9 ***" << endl;
+        /*
+        7x9 Darwin
+        Trap,   facing SOUTH, at (0, 0)
+        Hopper, facing EAST,  at (3, 2)
+        Rover,  facing NORTH, at (5, 4)
+        Trap,   facing WEST,  at (6, 8)
+        Simulate 5 moves.
+        Print every grid.
+        */
+        Darwin darwin(7, 9);
+        darwin.add_creature(0, 0, trap, SOUTH);
+        darwin.add_creature(3, 2, hopper, EAST);
+        darwin.add_creature(5, 4, rover, NORTH);
+        darwin.add_creature(6, 8, trap, WEST);
+
+       cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i = 0; i < 5; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+
+    try {
+        cout << "*** Darwin 5x5 infect trap full 360 rotation ***" << endl;
+        Darwin darwin(5, 5);
+        darwin.add_creature(0, 0, trap, SOUTH);
+        darwin.add_creature(0, 2, trap, WEST);
+        darwin.add_creature(0, 4, trap, SOUTH);
+        darwin.add_creature(4, 2, hopper, NORTH);
+        darwin.add_creature(4, 0, hopper, NORTH);
+        darwin.add_creature(4, 4, hopper, NORTH);
+        
+        cout << "Turn = " << 0 << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        for (int i=0; i < 6; i++) {
+            darwin.darwin_turn();
+            cout << "Turn = " << i << "." << endl;  
+                                        darwin.print();
+                                        cout << endl;
+        }
+
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+    
+   
+//***************************************ryan76-RunDarwin.*********************************************************8
+try {
+        cout << "*** Darwin 10x10 ***" << endl;
+        
+        /*
+        10x10 Darwin
+        Food,   facing east,  at (0, 0)
+        Hopper, facing north, at (3, 3)
+        Hopper, facing east,  at (3, 4)
+        Hopper, facing south, at (4, 4)
+        Hopper, facing west,  at (4, 3)
+        Food,   facing north, at (7, 7)
+        Simulate 5 moves.
+        Print every grid.
+        */
+        
+        Darwin x(10, 10);
+        
+        
+        x.add_creature(0, 0, food, EAST);
+        x.add_creature(3, 3, hopper, NORTH);
+        x.add_creature(3, 4, hopper, EAST);
+        x.add_creature(4, 4, hopper, SOUTH);
+        x.add_creature(4, 3, hopper, WEST);
+        x.add_creature(7, 7, food, NORTH);
+        
+        for (int i = 0; i <= 5; i++) {
+            cout << "Turn = " << i << "." << endl;  
+                                        x.print();
+                                        cout << endl;
+            x.darwin_turn();
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+// ----------
+// darwin 6x6
+// ----------
+
+    try {
+        cout << "*** Darwin 6x6 ***" << endl;
+        srand(0);
+        
+        /*
+        7x9 Darwin
+        Trap,   facing south, at (0, 0)
+        Hopper, facing east,  at (3, 2)
+        Rover,  facing north, at (5, 4)
+        Trap,   facing west,  at (6, 6)
+        Simulate 5 moves.
+        Print every grid.
+        */
+        
+        Darwin x(7, 9);
+        
+        x.add_creature(0, 0, trap, SOUTH);
+        x.add_creature(3, 2, hopper, EAST);
+        x.add_creature(5, 4, rover, NORTH);
+        x.add_creature(6, 6, trap, WEST);
+        
+        for (int i = 0; i <= 5; i++) {
+            cout << "Turn = " << i << "." << endl;  
+                                        x.print();
+                                        cout << endl;
+            x.darwin_turn();
+        }
+        
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+
+// ------------
+// darwin 72x72
+// without best
+// ------------
+
+    try {
+        cout << "*** Darwin 72x72 without Best ***" << endl;
+        srand(0);
+        
+        /*
+        Randomly place the following creatures facing randomly.
+        Call rand(), mod it with 5184 (72x72), and use that for the position
+        in a row-major order grid.
+        Call rand() again, mod it with 4 and use that for it's direction with
+        the ordering: west, north, east, south.
+        Do that for each kind of creature.
+        10 Food
+        10 Hopper
+        10 Rover
+        10 Trap
+        Simulate 1000 moves.
+        Print the first 10 grids          (i.e. 0, 1, 2...9).
+        Print every 100th grid after that (i.e. 100, 200, 300...1000).
+        */
+        
+        Darwin d(72, 72);
+        for (int i = 0; i < 10; i++) {
+            int direction = rand() % 4 + 1;
+            int position = rand() % 5184;
+            int row = position % 72;
+            int column = position / 72;
+            d.add_creature(row, column, food, direction);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            int direction = rand() % 4 + 1;
+            int position = rand() % 5184;
+            int row = position % 72;
+            int column = position / 72;
+            d.add_creature(row, column, hopper, direction);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            int direction = rand() % 4 +1 ;
+            int position = rand() % 5184;
+            int row = position % 72;
+            int column = position / 72;
+            d.add_creature(row, column, rover, direction);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            int direction = rand() % 4 +1 ;
+            int position = rand() % 5184;
+            int row = position % 72;
+            int column = position / 72;
+            d.add_creature(row, column, trap, direction);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            cout << "Turn = " << i << "." << endl;  
+                                        d.print();
+                                        cout << endl;
+            d.darwin_turn();
+        }
+        
+        for (int i = 10; i < 1001; i++) {
+            if (i % 100 == 0) {cout << "Turn = " << i << "." << endl;  
+                                        d.print();
+                                        cout << endl;}
+            d.darwin_turn();
+        }
+        }
+    catch (const invalid_argument&) {
+        assert(false);}
+    catch (const out_of_range&) {
+        assert(false);}
+        
 
 
     return 0;}

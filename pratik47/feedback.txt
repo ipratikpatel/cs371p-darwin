@@ -1,0 +1,1 @@
+1 day late, -10 for 72x72 without best the final grid doesn't match expected pattern

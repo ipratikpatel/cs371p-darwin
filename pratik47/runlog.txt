@@ -1,0 +1,50 @@
+
+Compiling and Running Tests:
+
+g++ -pedantic -std=c++0x -Wall Darwin.c++ TestDarwin.c++ -o TestDarwin -lgtest -lpthread -lgtest_main
+Darwin.c++: In member function ‘bool Creature::hop()’:
+Darwin.c++:262:3: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+Darwin.c++: In member function ‘bool Creature::left()’:
+Darwin.c++:129:1: warning: control reaches end of non-void function [-Wreturn-type]
+Darwin.c++: In member function ‘bool Creature::right()’:
+Darwin.c++:94:1: warning: control reaches end of non-void function [-Wreturn-type]
+valgrind TestDarwin > TestDarwin.out
+==14952== Memcheck, a memory error detector
+==14952== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==14952== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==14952== Command: TestDarwin
+==14952== 
+==14952== 
+==14952== HEAP SUMMARY:
+==14952==     in use at exit: 0 bytes in 0 blocks
+==14952==   total heap usage: 2,379 allocs, 2,379 frees, 262,689 bytes allocated
+==14952== 
+==14952== All heap blocks were freed -- no leaks are possible
+==14952== 
+==14952== For counts of detected and suppressed errors, rerun with: -v
+==14952== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+
+Compiling and Running Program:
+
+g++ -pedantic -std=c++0x -Wall Darwin.c++ RunDarwin.c++ -o RunDarwin -lgtest -lpthread -lgtest_main
+Darwin.c++: In member function ‘bool Creature::hop()’:
+Darwin.c++:262:3: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+Darwin.c++: In member function ‘bool Creature::left()’:
+Darwin.c++:129:1: warning: control reaches end of non-void function [-Wreturn-type]
+Darwin.c++: In member function ‘bool Creature::right()’:
+Darwin.c++:94:1: warning: control reaches end of non-void function [-Wreturn-type]
+valgrind RunDarwin > RunDarwin.out
+==14966== Memcheck, a memory error detector
+==14966== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==14966== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==14966== Command: RunDarwin
+==14966== 
+==14966== 
+==14966== HEAP SUMMARY:
+==14966==     in use at exit: 0 bytes in 0 blocks
+==14966==   total heap usage: 1,282,989 allocs, 1,282,989 frees, 44,543,404 bytes allocated
+==14966== 
+==14966== All heap blocks were freed -- no leaks are possible
+==14966== 
+==14966== For counts of detected and suppressed errors, rerun with: -v
+==14966== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
